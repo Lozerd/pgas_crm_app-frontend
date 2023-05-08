@@ -1,0 +1,36 @@
+.news {
+    display: flex;
+    flex-flow: column wrap;
+
+    max-width: 760px;
+
+    border: 1px solid red;
+
+    &--item {
+        display: inherit;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0.7rem;
+
+        padding: 15px;
+        min-height: 250px;
+
+        border: 1px solid red;
+
+        & img {
+            max-width: 240px;
+            max-height: 150px;
+        }
+
+        .item--content {
+            align-items: flex-end;
+            .item--title {
+                font-size: $fz-huge;
+            }
+
+            .item--description {
+                font-size: $fz-medium;
+            }
+        }
+    }
+}

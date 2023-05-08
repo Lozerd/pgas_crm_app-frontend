@@ -1,0 +1,31 @@
+{
+  "name": "pgas_crm_app-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "=5.13.6",
+    "@nuxtjs/dotenv": "=1.4.1",
+    "@nuxtjs/style-resources": "=1.2.1",
+    "connect-logger": "0.0.1",
+    "core-js": "=3.25.3",
+    "normalize.css": "=8.0.1",
+    "nuxt": "=2.15.8",
+    "sass": "=1.62.1",
+    "sass-loader": "=10.1.1",
+    "vue": "=2.7.10",
+    "vue-server-renderer": "=2.7.10",
+    "vue-template-compiler": "=2.7.10"
+  },
+  "devDependencies": {
+    "@nuxtjs/stylelint-module": "^5.0.1",
+    "prettier": "=2.8.8",
+    "stylelint": "=15.6.1",
+    "stylelint-scss": "=5.0.0"
+  }
+}

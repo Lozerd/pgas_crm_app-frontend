@@ -1,0 +1,51 @@
+@mixin btn {
+    outline: none;
+    border-radius: 7px;
+
+    font-size: $fz-large;
+
+    background: $color-main;
+    color: #fff;
+
+    border: 1px solid #fff;
+
+    &:hover {
+        transition: 150ms ease-in;
+        border: 1px solid $color-main;
+        background: #fff;
+        color: $color-main;
+    }
+}
+
+@mixin input-normal {
+    // TODO
+    border: 1px solid #999;
+    border-right: none;
+
+    border-color: #eee !important;
+    color: #999 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+
+    padding: 4px 9px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1;
+
+    transition: none;
+
+    &:focus {
+        border: 1px solid #999;
+        border-right: none;
+        padding: 4px;
+        text-shadow: 0 1px 0 #fff;
+        outline: 0;
+    }
+
+    @media (min-width: 1200px) {
+        input, textarea, .uneditable-input {
+            margin-left: 0;
+        }
+    }
+}

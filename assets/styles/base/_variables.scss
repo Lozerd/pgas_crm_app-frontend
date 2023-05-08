@@ -1,0 +1,23 @@
+// General font-size
+$fz-small: 14px;
+$fz-medium: 16px;
+$fz-large: 18px;
+$fz-huge: 28.2px;
+
+// Tag specific font sizes
+$fz-input: 13px;
+$fz-button: 14.4px;
+$fz-span: $fz-small;
+$fz-a: $fz-large;
+$fz-h1: 27.3px;
+
+$font-family: "PT Sans Narrow";
+
+
+// Colors
+$color-main: #005b94;
+
+
+// Position based measurements
+$notification-height: 50px;
+$header-mh: 160px;
