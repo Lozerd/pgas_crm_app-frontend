@@ -1,11 +1,14 @@
 <template>
-    <aside class="news">
-        <NewsItem
-            :key="item.id"
-            :item="item"
-            v-for="item in news"
-            v-if="item.description"
-        />
+    <aside v-if="true" class="news__container">
+        <h1>Новости</h1>
+        <div class="news">
+            <NewsItem
+                :key="item.id"
+                :item="item"
+                v-for="item in news"
+                v-if="item.description"
+            />
+        </div>
     </aside>
 </template>
 

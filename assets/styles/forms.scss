@@ -1,0 +1,53 @@
+.field {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+
+
+    &__input {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        height: 48px;
+
+        background: $color-primary-lightblue;
+        color: #fff;
+
+        padding: 12px 20px;
+
+        display: block;
+
+        &:focus, &:hover {
+            background: rgba($color-primary-lightblue, 0.9);
+        }
+
+        &::placeholder {
+            color: transparent;
+        }
+
+        &:placeholder-shown {
+            & ~ .field__title {
+                display: block;
+            }
+        }
+    }
+
+    &__title {
+        display: none;
+        color: #fff;
+        position: absolute;
+        top: 15px;
+        padding: 0 20px;
+    }
+}
+
+.error {
+    &-list {
+        margin: 0;
+        padding: 0 0 0 5px;
+    }
+
+    &-item {
+        color: $color-secondary;
+    }
+}

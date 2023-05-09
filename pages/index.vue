@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main class="wrapper">
         <News />
         <section></section>
     </main>

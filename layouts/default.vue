@@ -5,16 +5,42 @@
             <Nuxt />
         </main>
         <Footer />
+
+        <ModalLogin />
+        <ModalRegistration />
     </div>
 </template>
 
 <script>
 import Notification from "@/components/Notification";
+import ModalLogin from "@/components/modals/ModalLogin.vue";
+import ModalRegistration from "@/components/modals/ModalRegistration.vue";
 // TODO прикрутить куда-то темный режим и продумать режим для слабовидящих
 export default {
     name: "default",
     components: {
+        ModalRegistration,
+        ModalLogin,
         Notification
+    },
+    methods: {
+        overflowListener() {
+            const body = document.querySelector("body");
+
+            this.$nuxt.$on("enableOverflow", () => {
+                if (!body.classList.contains("overflow")) {
+                    body.classList.add("overflow");
+                }
+            });
+            this.$nuxt.$on("disableOverflow", () => {
+                if (body.classList.contains("overflow")) {
+                    body.classList.remove("overflow");
+                }
+            });
+        }
+    },
+    mounted() {
+        this.overflowListener();
     }
 };
 </script>

@@ -1,0 +1,54 @@
+<template>
+    <AppValidationObserver
+        v-slot="{ handleSubmit }"
+        ref="validationObserver"
+        slim
+    >
+        <form
+            @submit.prevent="handleSubmit(formSubmit)"
+            ref="AppFormRef"
+            :action="action"
+        >
+            <slot></slot>
+            <ul class="errors-list" v-if="errors">
+                <li :key="error" v-for="error in errors">{{ error }}</li>
+            </ul>
+            <button type="submit" class="button__submit">
+                {{ submitButtonText }}
+            </button>
+        </form>
+    </AppValidationObserver>
+</template>
+
+<script>
+export default {
+    name: "AppForm",
+    methods: {
+        formSubmit() {
+            this.onSubmit(this.$refs.AppFormRef);
+        }
+    },
+    props: {
+        onSubmit: {
+            type: Function,
+            required: true
+        },
+        errors: {
+            type: Array,
+            required: false
+        },
+        action: {
+            type: String,
+            required: false,
+            default: ""
+        },
+        submitButtonText: {
+            type: String,
+            required: false,
+            default: "Отправить"
+        }
+    }
+};
+</script>
+
+<style lang="scss"></style>

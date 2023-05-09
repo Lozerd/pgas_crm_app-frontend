@@ -1,0 +1,57 @@
+.auth {
+    padding: 30px 25px;
+
+    margin: 0 auto;
+
+    &__header {
+        display: flex;
+        justify-content: center;
+
+        & h1 {
+            color: $color-secondary;
+        }
+
+    }
+
+    &__form {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 10px;
+
+        max-width: 400px;
+        margin: 0 auto;
+
+        & .field {
+
+            &:not(:last-of-type) {
+                margin-bottom: 20px;
+            }
+
+            width: 400px;
+            max-width: 500px;
+        }
+
+
+        & .button__submit {
+            margin-top: 20px;
+            padding: 6px 20px;
+
+            background: $color-secondary;
+
+            &:hover {
+                color: #fff;
+                background: rgba($color-secondary, 0.9);
+            }
+        }
+
+        &--footer {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+
+            & button {
+                padding: 6px 10px;
+            }
+        }
+    }
+}

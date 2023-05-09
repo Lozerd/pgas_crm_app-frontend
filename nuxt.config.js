@@ -7,6 +7,8 @@ export default {
 
     target: "server",
 
+    dev: process.env.NODE_ENV !== "production",
+
     server: {
         port: process.env.port || 3000
     },
@@ -55,7 +57,11 @@ export default {
     css: ["normalize.css/normalize.css"],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-    plugins: [],
+    plugins: [
+        { src: "@/plugins/vee-validate.js" },
+        "@/plugins/i18n.js",
+        "@/plugins/vue-js-modal.js"
+    ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
@@ -84,13 +90,26 @@ export default {
         // https://go.nuxtjs.dev/axios
         "@nuxtjs/axios",
         "@nuxtjs/dotenv",
-        [
-            "@nuxtjs/stylelint-module",
-            {
-                "length-zero-no-unit": true
-            }
-        ]
+        "@nuxtjs/i18n"
     ],
+
+    i18n: {
+        locales: ["en", "ru"],
+        baseUrl: process.env.baseUrl,
+        vueI18nLoader: true,
+        defaultLocale: "ru",
+        vueI18n: {
+            fallbackLocale: "ru",
+            messages: {
+                ru: {
+                    validationRules: {
+                        required: "Это поле обязательно",
+                        email: "Введите валидный email"
+                    }
+                }
+            }
+        }
+    },
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
@@ -112,7 +131,7 @@ export default {
                 "^/api/": ""
             },
             headers: {
-                "X-ACCESS-TOKEN": process.env.apiToken
+                "X-Access-Token": process.env.apiToken
             }
         },
         "/media/": {
@@ -128,7 +147,8 @@ export default {
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
-        postcss: null
+        postcss: null,
+        transpile: ["vee-validate/dist/rules"]
     },
 
     styleResources: {

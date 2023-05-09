@@ -1,19 +1,32 @@
+@mixin debug {
+    border: 1px solid red;
+}
+
 @mixin btn {
     outline: none;
     border-radius: 7px;
 
     font-size: $fz-large;
 
-    background: $color-main;
+    background: $color-primary-lightblue;
     color: #fff;
 
     border: 1px solid #fff;
 
     &:hover {
         transition: 150ms ease-in;
-        border: 1px solid $color-main;
+        border: 1px solid $color-primary-lightblue;
         background: #fff;
-        color: $color-main;
+        color: $color-primary-lightblue;
+    }
+}
+
+@mixin link {
+    text-decoration: none;
+    color: $color-primary-lightest_blue;
+
+    &:visited {
+        color: $color-primary-blue;
     }
 }
 
