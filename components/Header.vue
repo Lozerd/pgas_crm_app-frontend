@@ -44,11 +44,14 @@ l-28 10 68 52 c275 208 479 542 550 903 22 110 25 380 5 500 -43 263 -176 542
 </template>
 
 <script>
+import LoginForm from "~/components/auth/LoginForm.vue";
+
 export default {
     name: "Header",
     methods: {
         showLoginModal() {
-            this.$modal.show("modal__login");
+            this.$modal.hideAll();
+            this.$modal.show(LoginForm);
         }
     }
 };

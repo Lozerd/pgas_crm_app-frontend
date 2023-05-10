@@ -1,18 +1,57 @@
 <template>
-    <AuthForm
-        formTitle="Авторизация"
-        footerTextLeft="Забыли пароль?"
-        footerTextRight="Зарегистрироваться"
-        submitButtonText="Войти"
-    />
+    <AuthForm formTitle="Авторизация">
+        <AppForm
+            :onSubmit="onSubmit"
+            :errors="errors"
+            submitButtonText="Войти"
+            class="auth__form"
+        >
+            <AppInput
+                title="Имя пользователя"
+                name="username"
+                :required="true"
+            />
+            <AppInput
+                title="Пароль"
+                name="password"
+                :type="'password'"
+                :required="true"
+            />
+            <div class="auth__form--footer">
+                <div class="footer--left">
+                    <button
+                        type="button"
+                        @click="footerLeftClicked"
+                        class="btn__link"
+                    >
+                        Забыли пароль?
+                    </button>
+                </div>
+                <div class="footer--right">
+                    <button
+                        type="button"
+                        @click="footerRightClicked"
+                        class="btn__link"
+                    >
+                        Зарегистрироваться
+                    </button>
+                </div>
+            </div>
+        </AppForm>
+    </AuthForm>
 </template>
 
 <script>
 import AuthForm from "@/components/auth/includes/AuthForm";
+import AppForm from "~/components/common/AppForm.vue";
+import AppInput from "~/components/common/AppInput.vue";
+import RegisterForm from "~/components/auth/RegisterForm.vue";
 
 export default {
     name: "LoginForm",
     components: {
+        AppInput,
+        AppForm,
         AuthForm
     },
     data() {
@@ -21,7 +60,15 @@ export default {
         };
     },
     methods: {
+        footerLeftClicked() {
+            // this.$modal.show("modal__forgot");
+        },
+        footerRightClicked() {
+            this.$modal.hideAll();
+            this.$modal.show(RegisterForm);
+        },
         async onSubmit(formRef) {
+            console.log(123);
             let formData = new FormData(formRef);
             try {
                 await this.$axios
@@ -53,6 +100,4 @@ export default {
     }
 };
 </script>
-<style lang="scss">
-@import "@/assets/styles/components/auth/login_form.scss";
-</style>
+<style lang="scss"></style>

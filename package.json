@@ -11,7 +11,7 @@
   "dependencies": {
     "@nuxtjs/axios": "=5.13.6",
     "@nuxtjs/dotenv": "=1.4.1",
-    "@nuxtjs/i18n": "^7.3.1",
+    "@nuxtjs/i18n": "=7.3.1",
     "@nuxtjs/style-resources": "=1.2.1",
     "connect-logger": "0.0.1",
     "core-js": "=3.25.3",
@@ -21,12 +21,11 @@
     "sass-loader": "=10.1.1",
     "vee-validate": "=3.4.14",
     "vue": "=2.7.10",
-    "vue-js-modal": "^2.0.1",
+    "vue-js-modal": "=2.0.1",
     "vue-server-renderer": "=2.7.10",
     "vue-template-compiler": "=2.7.10"
   },
   "devDependencies": {
-    "@nuxtjs/stylelint-module": "^5.0.1",
     "prettier": "=2.8.8",
     "stylelint": "=15.6.1",
     "stylelint-scss": "=5.0.0"

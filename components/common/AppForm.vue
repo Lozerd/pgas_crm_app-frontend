@@ -5,7 +5,7 @@
         slim
     >
         <form
-            @submit.prevent="handleSubmit(formSubmit)"
+            @submit.prevent="handleSubmit(formOnSubmit)"
             ref="AppFormRef"
             :action="action"
         >
@@ -13,7 +13,7 @@
             <ul class="errors-list" v-if="errors">
                 <li :key="error" v-for="error in errors">{{ error }}</li>
             </ul>
-            <button type="submit" class="button__submit">
+            <button type="submit" class="btn button__submit">
                 {{ submitButtonText }}
             </button>
         </form>
@@ -24,14 +24,14 @@
 export default {
     name: "AppForm",
     methods: {
-        formSubmit() {
+        formOnSubmit() {
             this.onSubmit(this.$refs.AppFormRef);
         }
     },
     props: {
         onSubmit: {
             type: Function,
-            required: true
+            required: false
         },
         errors: {
             type: Array,
