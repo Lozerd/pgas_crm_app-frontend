@@ -88,6 +88,7 @@ export default {
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
         // https://go.nuxtjs.dev/axios
+        "cookie-universal-nuxt",
         "@nuxtjs/axios",
         "@nuxtjs/dotenv",
         "@nuxtjs/i18n"
@@ -104,7 +105,9 @@ export default {
                 ru: {
                     validationRules: {
                         required: "Это поле обязательно",
-                        email: "Введите валидный email"
+                        email: "Введите валидный email",
+                        min: "Минимальная длина {length} символов",
+                        confirmed: "Введенные пароли не совпадают"
                     }
                 }
             }
@@ -143,6 +146,10 @@ export default {
                 "X-Access-Token": process.env.apiToken
             }
         }
+    },
+
+    router: {
+        middleware: ["registrationConfirm"]
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -65,10 +65,19 @@ export default {
         },
         footerRightClicked() {
             this.$modal.hideAll();
-            this.$modal.show(RegisterForm);
+            this.$modal.show(
+                RegisterForm,
+                null,
+                { height: "600px" },
+                {
+                    opened: (e) => {
+                        console.log("emit");
+                        this.$nuxt.$emit("modalOpened");
+                    }
+                }
+            );
         },
         async onSubmit(formRef) {
-            console.log(123);
             let formData = new FormData(formRef);
             try {
                 await this.$axios

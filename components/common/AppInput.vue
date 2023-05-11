@@ -1,8 +1,11 @@
 <template>
     <AppValidationProvider
         class="field"
-        :tag="'label'"
-        :rules="rules"
+        tag="label"
+        :rules="computedRules"
+        :name="name"
+        :ref="name"
+        :vid="name"
         v-slot="{ errors }"
     >
         <ul class="error-list" v-if="errors && errors.length">
@@ -11,6 +14,7 @@
             </li>
         </ul>
         <input
+            :ref="name"
             :name="name"
             :type="type"
             :required="required"
@@ -31,7 +35,13 @@ export default {
         };
     },
     computed: {
-        rules() {
+        computedRules() {
+            return {
+                ...this.rules,
+                ...this.defaultRules
+            };
+        },
+        defaultRules() {
             return {
                 required: this.required,
                 email: this.type === "email"
@@ -67,6 +77,11 @@ export default {
             type: String,
             required: false,
             default: null
+        },
+        rules: {
+            type: Object,
+            required: false,
+            default: () => {}
         }
     }
 };

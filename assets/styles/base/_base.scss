@@ -109,11 +109,6 @@ input:required:after {
     content: " *";
 }
 
-/* sets up required form fields with the conventional following red asterix */
-input[type="email"]:invalid {
-    background: #f00;
-}
-
 
 input[type='text'],
 input[type='email'],

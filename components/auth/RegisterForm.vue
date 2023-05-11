@@ -12,11 +12,19 @@
                 :required="true"
             />
             <AppInput
-                title="Пароль"
-                name="password"
-                :type="'password'"
+                title="Электронная почта"
+                name="email"
+                type="email"
                 :required="true"
             />
+            <AppInput
+                title="Пароль"
+                name="password"
+                type="password"
+                :required="true"
+                :rules="{ min: 8 }"
+            />
+            <PasswordConfirmationInput />
             <div class="auth__form--footer">
                 <div class="footer--left">
                     <button @click="footerLeftClicked" class="btn__link">
@@ -37,6 +45,8 @@
 import AppInput from "@/components/common/AppInput.vue";
 import AppForm from "@/components/common/AppForm.vue";
 import LoginForm from "~/components/auth/LoginForm.vue";
+import PasswordConfirmationInput from "@/components/auth/includes/PasswordConfirmationInput.vue";
+import { map } from "core-js/internals/array-iteration";
 
 export default {
     name: "RegisterForm",
@@ -46,11 +56,32 @@ export default {
         };
     },
     components: {
+        PasswordConfirmationInput,
         AppForm,
         AppInput
     },
     methods: {
-        onSubmit() {},
+        async onSubmit(formRef) {
+            const data = new FormData(formRef),
+                redirectUri = this.$route.fullPath;
+
+            data.append("csrftokenmiddleware", this.$cookies.get("csrftoken"));
+            data.append("redirectUri", redirectUri);
+
+            await this.$axios
+                .$post("/api/register", data)
+                .then((res) => console.log(res))
+                .catch((err) => {
+                    if (err.response) {
+                        console.log(err.response.data);
+                        this.errors = err.response.data.detail.split(", ");
+                    } else if (err.request) {
+                        console.log("Request error: ", err.request);
+                    } else {
+                        console.log("Unexpected error: ", err);
+                    }
+                });
+        },
         footerLeftClicked() {
             // this.$modal.show(ModalLogin);
         },

@@ -26,7 +26,15 @@ export default {
     methods: {
         formOnSubmit() {
             this.onSubmit(this.$refs.AppFormRef);
+        },
+        modalOpenedListener() {
+            this.$nuxt.$on("modalOpened", (e) => {
+                document.querySelector("form").reset();
+            });
         }
+    },
+    mounted() {
+        this.modalOpenedListener();
     },
     props: {
         onSubmit: {
