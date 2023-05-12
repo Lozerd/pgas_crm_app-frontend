@@ -148,10 +148,6 @@ export default {
         }
     },
 
-    router: {
-        middleware: ["registrationConfirm"]
-    },
-
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
         postcss: null,

@@ -10,8 +10,10 @@
             :action="action"
         >
             <slot></slot>
-            <ul class="errors-list" v-if="errors">
-                <li :key="error" v-for="error in errors">{{ error }}</li>
+            <ul class="error-list" v-if="errors">
+                <li class="error-item" :key="error" v-for="error in errors">
+                    {{ error }}
+                </li>
             </ul>
             <button type="submit" class="btn button__submit">
                 {{ submitButtonText }}

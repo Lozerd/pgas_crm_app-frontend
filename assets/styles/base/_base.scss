@@ -161,3 +161,7 @@ button.btn {
 a.link {
     @include link;
 }
+
+.debug {
+    @include debug;
+}

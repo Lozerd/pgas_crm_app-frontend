@@ -2,7 +2,7 @@
     <AuthForm formTitle="Регистрация">
         <AppForm
             :onSubmit="onSubmit"
-            :errors="errors"
+            v-bind:errors="errors"
             submitButtonText="Зарегистрироваться"
             class="auth__form"
         >
@@ -46,7 +46,6 @@ import AppInput from "@/components/common/AppInput.vue";
 import AppForm from "@/components/common/AppForm.vue";
 import LoginForm from "~/components/auth/LoginForm.vue";
 import PasswordConfirmationInput from "@/components/auth/includes/PasswordConfirmationInput.vue";
-import { map } from "core-js/internals/array-iteration";
 
 export default {
     name: "RegisterForm",
@@ -93,4 +92,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss"></style>
