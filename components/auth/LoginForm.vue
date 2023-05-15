@@ -46,6 +46,7 @@ import AuthForm from "@/components/auth/includes/AuthForm";
 import AppForm from "~/components/common/AppForm.vue";
 import AppInput from "~/components/common/AppInput.vue";
 import RegisterForm from "~/components/auth/RegisterForm.vue";
+import RegisterConfirmForm from "@/components/auth/RegisterConfirmForm.vue";
 
 export default {
     name: "LoginForm",
@@ -79,19 +80,28 @@ export default {
         },
         async onSubmit(formRef) {
             let formData = new FormData(formRef);
+            formData.append(
+                "csrftokenmiddleware",
+                this.$cookies.get("csrftoken")
+            );
+
             try {
                 await this.$axios
                     .$post("/api/login", formData)
                     .then((res) => {
-                        console.log(res);
                         this.$store.commit(
                             "session/setSessionId",
                             res.sessionid
                         );
+                        this.$router.push({ path: "/profile" });
+                        this.$modal.hideAll();
                     })
-                    .catch((err) => {
-                        if (err.response.status === 404) {
-                            this.$modal.show("modal__registration");
+                    .catch(async (err) => {
+                        if (err.response.status === 403) {
+                            formData.delete("password");
+                            await this.onForbidden(formData);
+                        } else if (err.response.status === 404) {
+                            this.onNotFound();
                         } else if (err.response.status === 500) {
                             this.errors = [err.response.data.detail];
                         } else {
@@ -105,6 +115,21 @@ export default {
                 console.log(e);
                 alert(e);
             }
+        },
+        async onForbidden(formData) {
+            this.$axios
+                .$post("/api/resend_confirmation", formData)
+                .then((res) => {
+                    this.$modal.hideAll();
+                    this.$modal.show(RegisterConfirmForm);
+                })
+                .catch((err) => this.onNotFound());
+        },
+        onNotFound() {
+            this.$modal.hideAll();
+            this.$modal.show(RegisterForm, null, {
+                height: "600px"
+            });
         }
     }
 };

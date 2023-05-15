@@ -46,6 +46,7 @@ import AppInput from "@/components/common/AppInput.vue";
 import AppForm from "@/components/common/AppForm.vue";
 import LoginForm from "~/components/auth/LoginForm.vue";
 import PasswordConfirmationInput from "@/components/auth/includes/PasswordConfirmationInput.vue";
+import RegisterConfirmForm from "@/components/auth/RegisterConfirmForm.vue";
 
 export default {
     name: "RegisterForm",
@@ -69,7 +70,10 @@ export default {
 
             await this.$axios
                 .$post("/api/register", data)
-                .then((res) => console.log(res))
+                .then((res) => {
+                    this.$modal.hideAll();
+                    this.$modal.show(RegisterConfirmForm);
+                })
                 .catch((err) => {
                     if (err.response) {
                         console.log(err.response.data);
