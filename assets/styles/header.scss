@@ -19,17 +19,24 @@
         -moz-box-shadow: 0 10px 9px -1px rgba(0, 0, 0, 0.15);
         box-shadow: 0 10px 9px -1px rgba(0, 0, 0, 0.15);
 
+        & .wrapper {
+            position: relative;
+        }
+
         & .logo > img {
             max-width: calc($header-mh / 2);
         }
 
-        & .authorize {
-            padding: 10px 20px;
+        & .btn {
+            @include header-button;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            &.authorize {
+            }
+
+            &.profile:hover {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
 
             & svg {
                 fill: #fff;

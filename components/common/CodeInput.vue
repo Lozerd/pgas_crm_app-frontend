@@ -94,7 +94,7 @@ export default {
 
 <style lang="scss">
 .code {
-    flex-direction: row;
+    flex-direction: row !important;
     justify-content: space-around;
 }
 </style>

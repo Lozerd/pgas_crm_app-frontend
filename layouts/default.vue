@@ -10,11 +10,25 @@
 
 <script>
 import Notification from "@/components/Notification";
+import LoginForm from "@/components/auth/LoginForm.vue";
 // TODO прикрутить куда-то темный режим и продумать режим для слабовидящих
 export default {
     name: "default",
     components: {
         Notification
+    },
+    data() {
+        return {
+            showLoginModal: false
+        };
+    },
+    watch: {
+        showLoginModal(newValue, oldValue) {
+            if (newValue) {
+                this.$modal.show(LoginForm);
+                this.$cookies.remove("showLoginModal");
+            }
+        }
     },
     methods: {
         overflowListener() {
@@ -34,6 +48,7 @@ export default {
     },
     mounted() {
         this.overflowListener();
+        this.showLoginModal = this.$cookies.get("showLoginModal");
     }
 };
 </script>

@@ -52,7 +52,10 @@ export default {
                     this.$modal.show(LoginForm);
                 })
                 .catch((err) => {
-                    if ([400, 404, 500].includes(err.response.status)) {
+                    if (err.response.status === 404) {
+                        this.$modal.hideAll();
+                        this.$modal.show(LoginForm);
+                    } else if ([400, 500].includes(err.response.status)) {
                         this.errors = [err.response.data.detail];
                     } else {
                         throw {

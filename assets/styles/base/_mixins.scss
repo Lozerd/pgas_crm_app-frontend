@@ -2,15 +2,9 @@
     border: 1px solid red;
 }
 
-@mixin btn {
-    outline: none;
-    border-radius: 7px;
-
-    font-size: $fz-large;
-
+@mixin btn-transition {
     background: $color-primary-lightblue;
     color: #fff;
-
     border: 1px solid #fff;
 
     &:hover {
@@ -21,11 +15,21 @@
     }
 }
 
+@mixin btn {
+    outline: none;
+    border-radius: 7px;
+
+    font-size: $fz-large;
+
+    @include btn-transition;
+}
+
 @mixin link {
     text-decoration: none;
     color: $color-primary-lightest_blue;
 
     &:visited {
+        background-color: #000;
         color: $color-primary-blue;
     }
 }
@@ -61,4 +65,18 @@
             margin-left: 0;
         }
     }
+}
+
+
+@mixin header-button {
+    padding: 10px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    height: 50px;
+    width: 150px;
+    max-width: 180px;
 }

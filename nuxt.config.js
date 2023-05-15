@@ -149,10 +149,20 @@ export default {
         }
     },
 
+    router: {
+        middleware: ["sessionToken", "axios"]
+    },
+
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
         postcss: null,
         transpile: ["vee-validate/dist/rules"]
+        // extend(config, ctx) {
+        //     console.log(ctx.isDev && ctx.isClient);
+        //     if (ctx.isDev && ctx.isClient) {
+        //         config.devtool = "eval-source-map";
+        //     }
+        // }
     },
 
     styleResources: {

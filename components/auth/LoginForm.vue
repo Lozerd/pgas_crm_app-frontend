@@ -89,12 +89,12 @@ export default {
                 await this.$axios
                     .$post("/api/login", formData)
                     .then((res) => {
-                        this.$store.commit(
-                            "session/setSessionId",
-                            res.sessionid
+                        this.$store.dispatch(
+                            "session/setAuthKey",
+                            res.auth_key
                         );
-                        this.$router.push({ path: "/profile" });
                         this.$modal.hideAll();
+                        this.$router.push({ path: "/profile" });
                     })
                     .catch(async (err) => {
                         if (err.response.status === 403) {
