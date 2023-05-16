@@ -1,12 +1,17 @@
 <template>
-    <div>Profile page</div>
+    <div class="wrapper"></div>
 </template>
 
 <script>
 export default {
     name: "index",
-    layout: "profile"
+    layout: "profile",
+    computed: {
+        is_superuser() {
+            return this.$store.getters["session/isSuperUser"];
+        }
+    }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss"></style>

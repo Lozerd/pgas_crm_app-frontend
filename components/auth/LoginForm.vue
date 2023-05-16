@@ -121,7 +121,9 @@ export default {
                 .$post("/api/resend_confirmation", formData)
                 .then((res) => {
                     this.$modal.hideAll();
-                    this.$modal.show(RegisterConfirmForm);
+                    this.$modal.show(RegisterConfirmForm, {
+                        formTitle: "Подтверждение"
+                    });
                 })
                 .catch((err) => this.onNotFound());
         },

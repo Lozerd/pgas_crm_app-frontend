@@ -1,4 +1,4 @@
-@import "base/mixins";
+@import "../base/mixins";
 
 .header__wrapper {
     z-index: 99;
@@ -13,7 +13,11 @@
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 2rem;
+        padding: 0.5rem 12rem;
+
+        @media screen and (max-width: 1000px) {
+            padding: 0.5rem 2rem;
+        }
 
         -webkit-box-shadow: 0 10px 9px -1px rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0 10px 9px -1px rgba(0, 0, 0, 0.15);
@@ -30,7 +34,8 @@
         & .btn {
             @include header-button;
 
-            &.authorize {
+            &.profile {
+                z-index: 101
             }
 
             &.profile:hover {

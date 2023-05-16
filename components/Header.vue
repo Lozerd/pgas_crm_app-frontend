@@ -62,7 +62,7 @@ l-28 10 68 52 c275 208 479 542 550 903 22 110 25 380 5 500 -43 263 -176 542
                 <HeaderDropdownMenu
                     :on-mouse-enter="onMouseEnter"
                     :on-mouse-leave="onMouseLeave"
-                    :dropdown-opened="dropdownOpened"
+                    :dropdown-opened="isAuthorized && dropdownOpened"
                 />
             </div>
         </header>
@@ -110,6 +110,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/styles/header.scss";
-</style>
+<style lang="scss"></style>

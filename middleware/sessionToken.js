@@ -6,4 +6,7 @@ export default function ({ store }) {
     if (!store.state.session.auth_key) {
         store.dispatch("session/getAuthKey");
     }
+    if (!store.state.session.is_superuser) {
+        store.dispatch("session/getIsSuperuser");
+    }
 }

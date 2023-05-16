@@ -3,11 +3,14 @@
 @import "base/variables";
 @import "base/typography";
 
-@import "header";
-@import "footer";
-@import "forms";
-
+@import "common/header";
+@import "common/footer";
+@import "common/forms";
 
 .container {
-    padding: 40px 50px 0;
+    padding: 40px 12rem 0;
+
+    @media screen and (max-width: 1000px) {
+        padding: 40px 2rem 0;
+    }
 }

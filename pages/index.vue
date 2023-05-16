@@ -1,8 +1,8 @@
 <template>
-    <main class="wrapper">
+    <div class="wrapper">
         <News />
         <section></section>
-    </main>
+    </div>
 </template>
 
 <script>

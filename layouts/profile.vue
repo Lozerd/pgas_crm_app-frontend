@@ -1,7 +1,8 @@
 <template>
     <div>
-        <!--        <Header />-->
+        <Header />
         <main class="container">
+            <ProfileAside />
             <Nuxt />
         </main>
         <!--        <Footer />-->
@@ -9,10 +10,20 @@
 </template>
 
 <script>
+import ProfileAside from "@/components/profile/ProfileAside";
 export default {
     name: "profile",
-    middleware: ["redirectUnauthorized"]
+    components: {
+        ProfileAside
+    },
+    middleware: ["redirectUnauthorized"],
+    async fetch() {
+        await this.$store.dispatch("profile/getAccount");
+    }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss">
+@import "@/assets/styles/base.scss";
+@import "@/assets/styles/profile.scss";
+</style>

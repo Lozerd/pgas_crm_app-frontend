@@ -1,5 +1,5 @@
 <template>
-    <AuthForm formTitle="Регистрация">
+    <AuthForm :formTitle="formTitle">
         <form @submit.prevent="onSubmit" ref="AppFormRef" class="auth__form">
             <div class="notification">
                 <span>
@@ -34,7 +34,6 @@ export default {
     },
     methods: {
         async onSubmit(e) {
-            console.log(e.target);
             let formData = new FormData(this.$refs.AppFormRef),
                 code = "",
                 data = {};
@@ -65,6 +64,12 @@ export default {
                     }
                 });
             console.log("Submit");
+        }
+    },
+    props: {
+        formTitle: {
+            type: String,
+            default: "Регистрация"
         }
     }
 };

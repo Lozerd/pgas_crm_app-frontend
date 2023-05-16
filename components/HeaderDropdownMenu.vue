@@ -1,21 +1,29 @@
 <template>
     <transition name="slide" mode="out-in">
         <div v-show="dropdownOpened" class="dropdown-menu">
-            <NuxtLink
-                :to="{ path: '/profile' }"
-                class="link dropdown-item"
-                @click="handleLogout"
-            >
+            <NuxtLink :to="{ path: '/profile' }" class="link dropdown-item">
                 <span class="dropdown-item__text">Профиль</span>
             </NuxtLink>
+
             <NuxtLink
-                :to="{ path: '/reports' }"
+                :to="{ path: '/profile/reports' }"
                 class="link dropdown-item"
-                @click="handleLogout"
+                v-if="isSuperUser"
             >
                 <span class="dropdown-item__text">Отчёты</span>
             </NuxtLink>
-            <button class="link dropdown-item" @click.prevent="handleLogout">
+            <NuxtLink
+                :to="{ path: '/profile/requests' }"
+                class="link dropdown-item"
+                v-else
+            >
+                <span class="dropdown-item__text">Заявки</span>
+            </NuxtLink>
+            <button
+                type="button"
+                class="link dropdown-item"
+                @click="handleLogout"
+            >
                 <span class="dropdown-item__text">Выйти</span>
             </button>
         </div>
@@ -25,9 +33,14 @@
 <script>
 export default {
     name: "HeaderDropdownMenu",
+    computed: {
+        isSuperUser() {
+            return this.$store.getters["session/isSuperUser"];
+        }
+    },
     methods: {
-        handleLogout() {
-            this.$store.dispatch("logout");
+        async handleLogout() {
+            await this.$store.dispatch("session/logout");
         }
     },
     props: {
@@ -74,7 +87,7 @@ export default {
 
     position: absolute;
     top: 50px;
-    z-index: 1000;
+    z-index: 100;
 
     width: 150px;
     max-width: 180px;

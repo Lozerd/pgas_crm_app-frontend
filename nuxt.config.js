@@ -58,6 +58,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+        "@/plugins/axios.js",
         { src: "@/plugins/vee-validate.js" },
         "@/plugins/i18n.js",
         "@/plugins/vue-js-modal.js"
@@ -66,8 +67,14 @@ export default {
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
 
+    loading: {
+        color: "#251170",
+        failedColor: "#c53d36",
+        height: "3px"
+    },
+
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-    buildModules: ["@nuxtjs/dotenv", "@nuxtjs/style-resources"],
+    buildModules: ["@nuxtjs/dotenv", "@nuxtjs/style-resources", "@nuxtjs/svg"],
 
     module: {
         rules: [
@@ -150,7 +157,7 @@ export default {
     },
 
     router: {
-        middleware: ["sessionToken", "axios"]
+        middleware: ["sessionToken"]
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
