@@ -1,20 +1,135 @@
+// width * 0.96, height * 0.9
 .profile__aside {
-    @include debug;
-    padding: 20px;
+    background-color: #fff;
+    padding: 25px;
+
+    border: 2px solid #e9e9e9;
+    border-radius: 25px;
 
     width: 100%;
-    max-width: 240px;
+    height: 770px;
+    max-width: 366px;
+    max-height: 1075px;
 
     &-account {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        margin-bottom: 40px;
 
         color: #414141;
 
         &-avatar img {
             border-radius: 50%;
+        }
+
+        &-info {
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+
+            &-name h1 {
+                margin: 0 !important; // normalize.css
+                font-weight: 500 !important;
+            }
+
+            &-email span {
+                color: #8e8e90 !important;
+            }
+        }
+    }
+
+    &-actions {
+
+        & .action__requests {
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 25px;
+            transition: background-color 300ms linear;
+
+            &.active {
+                background-color: #f2f1f7;
+                transition: background-color 600ms linear;
+
+                & .action__requests-header__icon > svg > path {
+                    fill: #6659EF !important;
+                }
+            }
+
+            &-header {
+                user-select: none;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+
+                gap: 10px;
+
+                &__icon {
+                    flex-grow: 0;
+                }
+
+                &__title {
+                    color: $color-profile-font-primary;
+                    flex-grow: 1;
+                    font-size: $fz-large;
+                }
+            }
+
+            &-content {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                gap: 5px;
+                margin-top: 10px;
+
+                height: 100px;
+
+                overflow: hidden;
+
+                &:hover {
+                    overflow-y: scroll;
+                    overflow-x: hidden;
+                }
+
+                &__item {
+                    border-radius: 25px;
+                    padding: 6px 32px 4px;
+                    width: 100%;
+                    height: 30px;
+                    color: $color-profile-font-secondary;
+
+                    transition: background-color 700ms, font-weight 1ms linear;
+
+                    &:hover {
+                        background-color: #dcdcfe;
+                        color: #6958f4;
+                        font-weight: bold;
+                        transition: font-weight 1s linear;
+                    }
+                }
+            }
+        }
+
+        & .action__students {
+            margin-left: 20px;
+
+            &-header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 10px;
+            }
+        }
+
+        & .action__orders {
+
         }
     }
 }

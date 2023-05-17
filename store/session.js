@@ -34,6 +34,7 @@ export const mutations = {
         state.auth_key = value;
     },
     resetSessionData(state) {
+        this.$cookies.remove("auth_key");
         Object.assign(state, defaultState());
     },
     setSuperUser(state, value) {

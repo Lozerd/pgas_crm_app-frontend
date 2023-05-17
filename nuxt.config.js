@@ -102,6 +102,7 @@ export default {
     ],
 
     i18n: {
+        strategy: "no_prefix",
         locales: ["en", "ru"],
         baseUrl: process.env.baseUrl,
         vueI18nLoader: true,

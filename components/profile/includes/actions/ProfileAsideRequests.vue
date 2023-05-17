@@ -10,7 +10,7 @@
             />
         </div>
 
-        <div class="action__requests-content">
+        <div class="action__requests-content" v-show="isDroppedDown">
             <div class="action__requests-content__item">Заявление №1</div>
             <div class="action__requests-content__item">Заявление №2</div>
             <div class="action__requests-content__item">Заявление №3</div>
@@ -23,38 +23,24 @@
 </template>
 
 <script>
-import RegisterConfirmForm from "@/components/auth/RegisterConfirmForm.vue";
-import RegisterForm from "@/components/auth/RegisterForm.vue";
+import docIcon from "@/assets/images/doc-icon.svg?raw";
+import downArrow from "@/assets/images/arrow-down.svg?raw";
 
 export default {
-    name: "components_testing",
-    components: { RegisterForm, RegisterConfirmForm },
+    name: "ProfileAsideRequests",
     data() {
         return {
-            todos: [
-                { text: "Заявление №1" },
-                { text: "Заявление №2" },
-                { text: "Заявление №3" }
-            ]
+            docIcon,
+            downArrow,
+            isDroppedDown: false
         };
     },
     methods: {
-        something() {
-            this.$modal.show(RegisterConfirmForm);
+        toggleDropDown() {
+            this.isDroppedDown = !this.isDroppedDown;
         }
-    },
-    mounted() {
-        // this.something();
     }
 };
 </script>
 
-<style scoped lang="scss">
-body {
-    overflow: hidden;
-}
-.action__requests-content {
-    height: 50px;
-    overflow: scroll;
-}
-</style>
+<style scoped></style>

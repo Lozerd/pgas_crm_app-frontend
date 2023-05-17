@@ -5,7 +5,10 @@
                 <span>
                     Мы отправили <b>код</b> на указанный вами адрес почты
                 </span>
-                <span>Введите код из письма, чтобы закончить регистрацию</span>
+                <span
+                    >Введите код из письма, чтобы закончить
+                    {{ formBodyEnding }}</span
+                >
             </div>
             <CodeInput />
             <ul class="error-list" v-if="errors">
@@ -70,6 +73,10 @@ export default {
         formTitle: {
             type: String,
             default: "Регистрация"
+        },
+        formBodyEnding: {
+            type: String,
+            default: "регистрацию"
         }
     }
 };

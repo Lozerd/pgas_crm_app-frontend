@@ -20,11 +20,15 @@ export const actions = {
             .$get("/api/profile/account")
             .then((res) => commit("setAccount", res))
             .catch((err) => {
-                console.log(err);
-                throw {
-                    message: err.response.data,
-                    statusCode: err.status
-                };
+                if (err.response.status === 403) {
+                    commit("session/resetSessionData", null, { root: true });
+                } else {
+                    console.log(err);
+                    throw {
+                        message: err.response.data,
+                        statusCode: err.status
+                    };
+                }
             });
     },
     async updateAccount({ commit }, payload) {

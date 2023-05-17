@@ -122,7 +122,8 @@ export default {
                 .then((res) => {
                     this.$modal.hideAll();
                     this.$modal.show(RegisterConfirmForm, {
-                        formTitle: "Подтверждение"
+                        formTitle: "Подтверждение",
+                        formBodyEnding: "авторизацию"
                     });
                 })
                 .catch((err) => this.onNotFound());
