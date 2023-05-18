@@ -1,6 +1,6 @@
 <template>
     <div class="action__students">
-        <NuxtLink :to="{ path: '/students' }" class="link">
+        <NuxtLink :to="{ path: '/profile/students' }" class="link">
             <div class="action__students-header">
                 <div class="action__students-header__icon" v-html="infoIcon" />
                 <div class="action__students-header__title">
@@ -29,4 +29,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

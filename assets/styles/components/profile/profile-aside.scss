@@ -117,7 +117,10 @@
         }
 
         & .action__students {
+            font-size: $fz-large;
             margin-left: 20px;
+            margin-bottom: 30px;
+            max-width: 190px;
 
             &-header {
                 display: flex;
@@ -125,10 +128,15 @@
                 align-items: center;
                 justify-content: flex-start;
                 gap: 10px;
+
+                &__title {
+                    color: $color-profile-font-secondary;
+                }
             }
         }
 
         & .action__orders {
+            font-size: $fz-large;
 
         }
     }
