@@ -49,12 +49,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-body {
-    overflow: hidden;
-}
-.action__requests-content {
-    height: 50px;
-    overflow: scroll;
-}
-</style>
+<style scoped lang="scss"></style>

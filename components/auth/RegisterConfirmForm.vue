@@ -104,7 +104,7 @@ export default {
         }
     }
 
-    & .button__submit {
+    & .button__wrapper .button__submit {
         min-width: 300px;
     }
 }

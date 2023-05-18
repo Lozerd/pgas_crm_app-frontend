@@ -47,10 +47,20 @@ export default {
             type: Array,
             required: false
         },
+        method: {
+            type: String,
+            required: false,
+            default: "get"
+        },
         action: {
             type: String,
             required: false,
             default: ""
+        },
+        customSubmitButton: {
+            type: Boolean,
+            required: false,
+            default: false
         },
         submitButtonText: {
             type: String,

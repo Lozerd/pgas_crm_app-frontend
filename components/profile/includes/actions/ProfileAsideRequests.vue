@@ -11,13 +11,17 @@
         </div>
 
         <div class="action__requests-content" v-show="isDroppedDown">
-            <div class="action__requests-content__item">Заявление №1</div>
-            <div class="action__requests-content__item">Заявление №2</div>
-            <div class="action__requests-content__item">Заявление №3</div>
-            <div class="action__requests-content__item">Заявление №4</div>
-            <div class="action__requests-content__item">Заявление №5</div>
-            <div class="action__requests-content__item">Заявление №6</div>
-            <div class="action__requests-content__item">Заявление №7</div>
+            <div
+                class="action__requests-content__item"
+                v-for="request in requests"
+                :key="request.id"
+            >
+                {{ request.title }}
+            </div>
+            <div class="action__requests-content__item"></div>
+        </div>
+        <div v-if="!isDroppedDown" class="action__requests-content small">
+            <span>Вы не подали ни одного заявления!</span>
         </div>
     </div>
 </template>
@@ -35,12 +39,31 @@ export default {
             isDroppedDown: false
         };
     },
+    computed: {
+        requests() {
+            return this.$store.getters["profile/getRequests"];
+        },
+        isRequests() {
+            return this.requests.length !== 0;
+        }
+    },
     methods: {
         toggleDropDown() {
-            this.isDroppedDown = !this.isDroppedDown;
+            this.isDroppedDown = this.isRequests && !this.isDroppedDown;
         }
+    },
+    async fetch() {
+        await this.$store.dispatch("profile/getRequests");
     }
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.small {
+    height: fit-content !important;
+
+    &:hover {
+        overflow-y: auto !important;
+    }
+}
+</style>

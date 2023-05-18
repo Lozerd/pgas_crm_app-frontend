@@ -8,19 +8,51 @@
     background-color: #f6f5fb;
     height: 100vh;
 
+    .profile-edit {
+        padding: 20px 40px;
+
+        border-radius: 25px;
+        border: 2px solid #e9e9e9;
+
+        background-color: #fff;
+
+        &__header {
+            text-align: center;
+        }
+
+        &__content > form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+
+            .field {
+                width: 400px;
+            }
+
+            .button__submit {
+                padding: 12px 20px;
+            }
+        }
+
+        form input {
+            color: #fff;
+        }
+    }
+
     h1 {
         font-size: 24px;
         font-weight: bold;
         color: $color-profile-font-primary;
     }
 
-    span {
+    span:not(.field__title) {
         font-size: $fz-medium;
         color: $color-profile-font-secondary;
     }
 
     button {
-        background-color: #1ed176;
+        background-color: $color-secondary;
         color: #fff;
     }
 }

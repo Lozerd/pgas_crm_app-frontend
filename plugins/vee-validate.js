@@ -1,7 +1,14 @@
 import Vue from "vue";
 
 import { extend, ValidationObserver, ValidationProvider } from "vee-validate";
-import { email, required, min, max, confirmed } from "vee-validate/dist/rules";
+import {
+    email,
+    required,
+    min,
+    max,
+    confirmed,
+    numeric
+} from "vee-validate/dist/rules";
 
 Vue.component("AppValidationProvider", ValidationProvider);
 Vue.component("AppValidationObserver", ValidationObserver);
@@ -11,3 +18,4 @@ extend("email", email);
 extend("min", min);
 extend("max", max);
 extend("confirmed", confirmed);
+extend("numeric", numeric);
