@@ -67,11 +67,12 @@ export default {
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: true,
 
-    loading: {
-        color: "#251170",
-        failedColor: "#c53d36",
-        height: "3px"
-    },
+    loading: false,
+    // loading: {
+    //     color: "#251170",
+    //     failedColor: "#c53d36",
+    //     height: "3px"
+    // },
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
     buildModules: ["@nuxtjs/dotenv", "@nuxtjs/style-resources", "@nuxtjs/svg"],

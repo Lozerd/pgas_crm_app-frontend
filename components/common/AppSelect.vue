@@ -25,14 +25,11 @@
             <option value="" disabled selected v-if="!!title">
                 {{ title }}
             </option>
-            <option
-                :disabled="initial && index === 0"
-                :value="key"
-                v-for="(name, key, index) in options"
-            >
+            <option :value="key" v-for="(name, key, index) in options">
                 {{ name }}
             </option>
         </select>
+        <span v-if="!labelless" class="field__title">{{ title }}</span>
     </AppValidationProvider>
 </template>
 <script>
@@ -40,7 +37,8 @@ export default {
     name: "AppSelect",
     data() {
         return {
-            selectValue: this.initial ?? this.options[0]
+            selectValue:
+                this.initial ?? (this.title ? "" : Object.keys(this.options)[0])
         };
     },
     computed: {
@@ -59,7 +57,8 @@ export default {
     props: {
         options: {
             type: Object,
-            required: true
+            required: true,
+            default: () => {}
         },
         title: {
             type: [String, Number],
@@ -95,6 +94,11 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        labelless: {
+            type: Boolean,
+            required: false,
+            default: true
         },
         rules: {
             type: Object,

@@ -1,5 +1,5 @@
 <template>
-    <aside v-if="account" class="profile__aside">
+    <aside v-if="account !== null" class="profile__aside">
         <ProfileAsideAccount />
         <ProfileAsideActions />
     </aside>

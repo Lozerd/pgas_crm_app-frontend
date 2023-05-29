@@ -1,12 +1,19 @@
 .container {
+    padding-bottom: 30px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
 
     gap: 30px;
 
+    @media (max-width: 906px) {
+        display: block;
+    }
+
+    min-width: 366px !important;
+
     background-color: #f6f5fb;
-    height: 100vh;
+    //height: 100vh;
 
     .profile-edit {
         padding: 20px 40px;
@@ -20,18 +27,43 @@
             text-align: center;
         }
 
-        &__content > form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+        &__content {
+            & form {
+                display: grid;
+                gap: 20px;
+                grid-template-columns: 1fr 100px 100px 1fr;
+                grid-template-rows: 1fr 30px 50px;
 
-            .field {
-                width: 400px;
+                .field {
+                    width: 300px;
+                }
+
+                @media screen and (max-width: 1352px) {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .button__submit {
+                    grid-column: 2 / 4;
+                    grid-row: 3 / 4;
+                    padding: 12px 20px;
+                }
             }
 
-            .button__submit {
-                padding: 12px 20px;
+            &__group {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+
+                &.primary {
+                    grid-column: 1 / 3;
+                }
+
+                &.secondary {
+                    grid-column: 3 / 5;
+                }
             }
         }
 

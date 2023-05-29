@@ -1,11 +1,22 @@
+const defaultNotification = () => {
+    return {
+        isActive: false,
+        isSuccess: null,
+        message: null
+    };
+};
 export const state = () => ({
-    notificationIsActive: false,
+    notification: {
+        isActive: false,
+        isSuccess: null,
+        message: null
+    },
     news: []
 });
 
 export const getters = {
-    getNotificationIsActive(state) {
-        return state.notificationIsActive;
+    getNotification(state) {
+        return state.notification;
     },
     getNews(state) {
         return state.news;
@@ -13,8 +24,11 @@ export const getters = {
 };
 
 export const mutations = {
-    setNotificationIsActive(state, value) {
-        state.notificationIsActive = value;
+    resetNotification(state, value) {
+        Object.assign(state.notification, defaultNotification());
+    },
+    setNotification(state, value) {
+        Object.assign(state.notification, value);
     },
     setNews(state, value) {
         state.news = value;
@@ -30,5 +44,15 @@ export const actions = {
                 console.log(err);
                 throw { message: err.detail, statusCode: err.statusCode };
             });
+    },
+    resetNotification({ commit }) {
+        commit("resetNotification");
+    },
+    toggleNotification({ commit }, { success = true, message = null }) {
+        commit("setNotification", {
+            isActive: true,
+            isSuccess: success,
+            message: message
+        });
     }
 };

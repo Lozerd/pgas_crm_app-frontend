@@ -117,7 +117,8 @@ export default {
             }
         },
         async onForbidden(formData) {
-            this.$axios
+            // TODO Переделать под resend_password
+            await this.$axios
                 .$post("/api/resend_confirmation", formData)
                 .then((res) => {
                     this.$modal.hideAll();
