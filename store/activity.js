@@ -1,6 +1,6 @@
 export const state = () => ({
-    activities: [],
-    activityCriterion: []
+    activities: {},
+    activityCriterion: {}
 });
 
 export const getters = {

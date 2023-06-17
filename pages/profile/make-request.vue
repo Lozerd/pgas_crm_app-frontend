@@ -11,17 +11,20 @@
                     method="post"
                     submitButtonText="Подать заявку"
                 >
-                    <div class="profile-make-request__content__group">
-                        <!--                        <AppInput name="title" title="ПРИКОЛ" />-->
-                        <AppSelect
-                            name="activity_id"
-                            title="Деятельность"
-                            :required="false"
-                            :options="activities"
-                            :rules="{ min: 1, max: 1 }"
-                            :labelless="true"
-                            :onChange="onChange"
-                        />
+                    <AppSelect
+                        name="activity_id"
+                        title="Деятельность"
+                        :required="false"
+                        :options="activities"
+                        :rules="{ min: 1, max: 1 }"
+                        :labelless="true"
+                        :onChange="onActivityChange"
+                    />
+                    <div
+                        ref="contentGroup"
+                        class="profile-make-request__content__group"
+                    >
+                        <!--                        TODO multiselect??-->
                         <AppSelect
                             name="activity_id"
                             title="Критерий отбора"
@@ -32,8 +35,8 @@
                             :visible="criterionVisible"
                             :onChange="onChange"
                         />
-                        <button>Добавить ещё</button>
                     </div>
+                    <button @click="addNewGroup">Добавить ещё</button>
                     <!--                    report_book_images-->
                     <!--                    achievements_images-->
                     <!--                    :initial="account?.degree"-->
@@ -47,6 +50,7 @@
 import AppForm from "@/components/common/AppForm.vue";
 import AppInput from "@/components/common/AppInput.vue";
 import AppSelect from "@/components/common/AppSelect.vue";
+import Vue from "vue";
 
 export default {
     name: "make-request",
@@ -55,6 +59,7 @@ export default {
     data() {
         return {
             errors: [],
+            activity_id: null,
             criterionVisible: false
         };
     },
@@ -68,10 +73,40 @@ export default {
     },
     methods: {
         onSubmit(formRef) {},
-        async onChange(event) {
+        addNewGroup() {
+            if (this.errors.length > 0 || !this.activityCriterion) {
+                return;
+            }
+
+            console.log(this.$refs.smth.$validator);
+
+            // this.$refs.smth.$validator.validate().then((valid) => {
+            //     if (valid) {
+            //         let selectClass = Vue.extend(AppSelect),
+            //             instance = new selectClass({
+            //                 propsData: {
+            //                     name: "activity_id",
+            //                     title: "Критерий отбора",
+            //                     required: "false",
+            //                     options: this.activityCriterion,
+            //                     rules: { min: 1, max: 1 },
+            //                     labelless: true,
+            //                     visible: this.criterionVisible
+            //                 }
+            //             });
+            //         instance.$mount();
+            //         this.$refs.contentGroup.appendChild(instance.$el);
+            //     }
+            // });
+        },
+        async onActivityChange(event) {
+            this.criterionVisible = true;
             await this.$store.dispatch("activity/getActivityCriterion", [
                 event.target.value
             ]);
+        },
+        onChange(e) {
+            console.log(e);
         }
     },
     async fetch() {

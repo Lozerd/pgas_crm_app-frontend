@@ -114,7 +114,10 @@ export default {
         },
         onChange: {
             type: Function,
-            required: false
+            required: false,
+            default(e) {
+                return;
+            }
         }
     }
 };
