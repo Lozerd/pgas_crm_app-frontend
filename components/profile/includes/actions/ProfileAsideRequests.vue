@@ -22,6 +22,12 @@
         </div>
         <div v-if="!isDroppedDown" class="action__requests-content small">
             <span>Вы не подали ни одного заявления!</span>
+            <NuxtLink
+                :to="{ path: '/profile/make-request' }"
+                class="action__requests-content__make-request"
+            >
+                Подать заявление
+            </NuxtLink>
         </div>
     </div>
 </template>

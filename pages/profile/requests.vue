@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <h1>Мои заявки</h1>
+        <h1>Создание новой заявки</h1>
     </div>
 </template>
 

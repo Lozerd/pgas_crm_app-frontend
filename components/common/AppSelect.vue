@@ -2,6 +2,7 @@
     <AppValidationProvider
         tag="label"
         class="field"
+        :class="visible ? '' : 'hidden'"
         :name="name"
         :ref="name"
         :vid="name"
@@ -21,6 +22,7 @@
             :disabled="disabled"
             v-model="selectValue"
             class="field__input"
+            @change="onChange"
         >
             <option value="" disabled selected v-if="!!title">
                 {{ title }}
@@ -95,6 +97,11 @@ export default {
             required: false,
             default: false
         },
+        visible: {
+            type: Boolean,
+            required: false,
+            default: true
+        },
         labelless: {
             type: Boolean,
             required: false,
@@ -104,7 +111,17 @@ export default {
             type: Object,
             required: false,
             default: () => {}
+        },
+        onChange: {
+            type: Function,
+            required: false
         }
     }
 };
 </script>
+
+<style scoped lang="scss">
+.hidden {
+    display: none;
+}
+</style>
