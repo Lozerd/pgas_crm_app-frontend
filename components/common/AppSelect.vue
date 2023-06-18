@@ -6,9 +6,9 @@
         :name="name"
         :ref="name"
         :vid="name"
+        :rules="computedRules"
         v-slot="{ errors }"
     >
-        <!--        :rules="computedRules"-->
         <ul class="error-list" v-if="errors && errors.length">
             <li class="error-item" :key="error" v-for="error in errors">
                 {{ error }}
@@ -122,9 +122,3 @@ export default {
     }
 };
 </script>
-
-<style scoped lang="scss">
-.hidden {
-    display: none;
-}
-</style>

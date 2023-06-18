@@ -79,6 +79,7 @@
         &__header {
             text-align: center;
         }
+
         &__content {
             & form {
                 display: flex;
@@ -87,7 +88,7 @@
                 gap: 20px;
 
                 .field {
-                    width: 300px;
+                    width: 400px;
                 }
 
                 & > .button__submit {
@@ -110,9 +111,12 @@
         color: $color-profile-font-primary;
     }
 
-    span:not(.field__title) {
-        font-size: $fz-medium;
-        color: $color-profile-font-secondary;
+    & span:not(.field__title) {
+        //font-size: $fz-medium;
+
+        &:not(.multiselect__*) {
+            color: $color-profile-font-secondary;
+        }
     }
 
     button {

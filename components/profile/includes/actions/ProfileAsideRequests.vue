@@ -20,7 +20,10 @@
             </div>
             <div class="action__requests-content__item"></div>
         </div>
-        <div v-if="!isDroppedDown" class="action__requests-content small">
+        <div
+            v-if="!isDroppedDown || !isRequests"
+            class="action__requests-content small"
+        >
             <span>Вы не подали ни одного заявления!</span>
             <NuxtLink
                 :to="{ path: '/profile/make-request' }"

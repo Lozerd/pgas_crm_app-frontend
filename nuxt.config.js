@@ -99,7 +99,8 @@ export default {
         "cookie-universal-nuxt",
         "@nuxtjs/axios",
         "@nuxtjs/dotenv",
-        "@nuxtjs/i18n"
+        "@nuxtjs/i18n",
+        "nuxt-vue-multiselect"
     ],
 
     i18n: {

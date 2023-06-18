@@ -1,6 +1,6 @@
 export const state = () => ({
     activities: {},
-    activityCriterion: {}
+    activityCriterion: []
 });
 
 export const getters = {
@@ -21,11 +21,12 @@ export const mutations = {
         state.activities = activities;
     },
     setActivityCriterion(state, value) {
-        let activityCriterion = {};
-        for (let criteria of value) {
-            activityCriterion[criteria.id] = criteria.description;
-        }
-        state.activityCriterion = activityCriterion;
+        // let activityCriterion = {};
+        // for (let criteria of value) {
+        //     activityCriterion[criteria.id] = criteria.description;
+        // }
+        // state.activityCriterion = activityCriterion;
+        state.activityCriterion = value;
     }
 };
 
