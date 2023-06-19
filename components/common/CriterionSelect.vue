@@ -5,7 +5,13 @@
         name="criterion"
         ref="criterion"
         vid="criterion"
+        rules="required"
     >
+        <ul class="error-list" v-if="errors">
+            <li class="error-item" :key="error" v-for="error in errors">
+                {{ error }}
+            </li>
+        </ul>
         <multiselect
             label="title"
             trackBy="key"
@@ -41,7 +47,7 @@ export default {
     name: "CriterionSelect",
     data() {
         return {
-            selectValue: this.options[0], // to display placeholder on non focused select.
+            selectValue: null, // to display placeholder on non focused select.
             disabled: false
         };
     },
@@ -53,7 +59,6 @@ export default {
                     if (el.getAttribute("title") !== null) {
                         return;
                     }
-                    console.log(12, this.options);
                     el.setAttribute("title", this.options[index]?.description);
                 });
         },
@@ -84,7 +89,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .multiselect {
     background: $color-primary-lightest_blue;
 
@@ -99,7 +104,7 @@ export default {
 
         color: #fff;
         background: $color-primary-lightest_blue;
-        border: none;
+        //border: none;
     }
 
     &__input,
@@ -107,10 +112,15 @@ export default {
         //padding-left: 5px;
     }
 
+    &,
+    &--above {
+        border-radius: 5px;
+    }
+
     &__option {
         &--highlight {
             background: $color-primary-lightblue;
-            outline: none;
+            //outline: none;
             color: #fff;
 
             &:after {
