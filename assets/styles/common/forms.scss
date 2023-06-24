@@ -29,6 +29,14 @@
                 display: block;
             }
         }
+
+        &[type=file] {
+            & ~ .field__title {
+                top: -17px !important;
+                display: block;
+                color: $color-profile-font-secondary;
+            }
+        }
     }
 
     &__title {

@@ -20,7 +20,6 @@
             selectLabel="Подробнее"
             deselectLabel=""
             selectedLabel="Выбран"
-            :id="this === null ? null : this._uid"
             :disabled="disabled"
             :searchable="true"
             :options="options"
@@ -62,25 +61,30 @@ export default {
                     el.setAttribute("title", this.options[index]?.description);
                 });
         },
-        emitSelect(e) {
+        emitSelect(selectedOption) {
             this.$nuxt.$emit("criterion-select", {
-                uid: this._uid,
-                selectValue: this.selectValue
+                uuid: this.uuid,
+                selectValue: selectedOption
             });
         },
         disableListener() {
-            this.$nuxt.$on("disableSelect", (uid) => {
-                if (this._uid !== uid) {
+            this.$nuxt.$on("disableSelect", (uuid) => {
+                if (this.uuid !== uuid) {
                     return;
                 }
                 this.disabled = true;
             });
-        }
+        },
     },
     mounted() {
         this.disableListener();
     },
     props: {
+        uuid: {
+            type: String,
+            required: false,
+            default: Math.floor(Math.random() * 100).toString()
+        },
         options: {
             type: Array[Object],
             required: true
@@ -90,8 +94,25 @@ export default {
 </script>
 
 <style lang="scss">
+.multiselect--active .multiselect__select {
+    top: 3px;
+}
 .multiselect {
     background: $color-primary-lightest_blue;
+
+    &,
+    &__tags {
+        min-height: 48px;
+    }
+
+    &__tags {
+        padding: 12px 40px 0 12px;
+    }
+
+    &__select {
+        top: 0;
+        height: 44px;
+    }
 
     &__single,
     &__tags,

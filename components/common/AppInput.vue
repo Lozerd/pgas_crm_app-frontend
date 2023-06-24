@@ -21,6 +21,8 @@
             :class="className"
             :placeholder="title"
             :disabled="disabled"
+            :multiple="multiple"
+            :accept="accept"
             v-model="inputValue"
             class="field__input"
         />
@@ -88,6 +90,16 @@ export default {
             type: Boolean,
             required: false,
             default: false
+        },
+        accept: {
+            type: String,
+            required: false,
+            default: ""
+        },
+        multiple: {
+            type: Boolean,
+            required: false,
+            default: true
         },
         rules: {
             type: Object,

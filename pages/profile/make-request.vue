@@ -21,12 +21,45 @@
                         :labelless="true"
                         :onChange="onActivityChange"
                     />
+                    <AppInput
+                        v-if="criterionVisible"
+                        name="report_book_images"
+                        type="file"
+                        title="Копия зачётной книжки"
+                        accept="image/png, image/jpeg"
+                        :required="true"
+                        :multiple="true"
+                    />
+                    <div v-for="(group, index) in groups">{{index}}|{{group}}|{{group.inputsVisible}}|{{ group.inputsVisible ?? false }}</div>
+
                     <div
                         ref="contentGroup"
                         v-if="criterionVisible"
                         class="profile-make-request__content__group"
+                        :key="group.criterionUID"
+                        v-for="(group, index) in cmptGroups"
                     >
-                        <CriterionSelect :options="activityCriterion" />
+                        <CriterionSelect :uuid="index.toString()" :options="activityCriterion" />
+                        <AppInput
+                            v-if="group.inputsVisible ?? false"
+                            title="Дата получения документа"
+                            name="document_date"
+                            :required="true"
+                            :rules="{ date_format: 'dd.MM.yyyy' }"
+                        />
+                        <AppInput
+                            v-if="group.inputsVisible ?? false"
+                            title="Наименование документа"
+                            name="document_title"
+                            :required="true"
+                        />
+                        <br>
+                        <AppInput
+                            v-if="group.inputsVisible ?? false"
+                            type="file"
+                            title="Файл документа"
+                            name="document_file"
+                        />
                     </div>
                     <button
                         ref="addMoreButton"
@@ -57,10 +90,14 @@ export default {
             errors: [],
             activity_id: null,
             criterionVisible: false,
-            selectsRegistry: {}
+            selectsRegistry: {},
+            groups: [{}]
         };
     },
     computed: {
+        cmptGroups() {
+            return this.groups;
+        },
         activities() {
             return this.$store.getters["activity/getActivities"];
         },
@@ -72,9 +109,17 @@ export default {
         }
     },
     methods: {
-        onSubmit(formRef) {},
+        onSubmit(formRef) {
+        },
         async onActivityChange(event) {
             this.criterionVisible = true;
+
+            if (this.groups.length > 0) {
+                this.groups = [{uuid: 0, inputsVisible: false}];
+            } else {
+                this.groups.push({});
+            }
+
             await this.$store.dispatch("activity/getActivityCriterion", [
                 event.target.value
             ]);
@@ -83,59 +128,25 @@ export default {
             if (!("contentGroup" in this.$refs)) {
                 return;
             }
-            e.preventDefault();
+            // e.preventDefault();
 
             this.validationObserver.validate().then((valid) => {
                 if (valid) {
-                    let selectClass = Vue.extend(CriterionSelect),
-                        instance = new selectClass({
-                            propsData: {
-                                options: this.activityCriterion
-                            }
-                        });
-                    this.$nextTick(() => {
-                        instance.$mount();
-                        this.$refs.contentGroup.appendChild(instance.$el);
-                    });
+                    this.groups.push({});
                 }
             });
         },
-        onCriterionSelect({ uid, selectValue }) {
-            if (uid in this.selectsRegistry) {
-                return;
+        onCriterionSelect({ uuid, selectValue }) {
+            if (!(uuid in this.selectsRegistry)) {
+                if (this.groups.length < 2) {
+                    // this.groups[0].inputsVisible = true
+                    // this.groups[0].criterionUID = uuid
+                } else {
+                    this.groups.push({ criterionUID: uuid, inputsVisible: true });
+                }
             }
 
-            this.selectsRegistry[uid] = selectValue;
-
-            this.addCriterionSelectFields();
-        },
-        addCriterionSelectFields() {
-            let appInputClass = Vue.extend(AppInput),
-                documentNameInputInstance = new appInputClass({
-                    propsData: {
-                        title: "Наименование документа",
-                        name: "document_name",
-                        required: true
-                    }
-                }),
-                documentDateInputInstance = new appInputClass({
-                    propsData: {
-                        title: "Дата или номер документа",
-                        name: "document_date",
-                        required: true
-                    }
-                });
-
-            this.$nextTick(() => {
-                documentNameInputInstance.$mount();
-                documentDateInputInstance.$mount();
-                this.$refs.contentGroup.appendChild(
-                    documentNameInputInstance.$el
-                );
-                this.$refs.contentGroup.appendChild(
-                    documentDateInputInstance.$el
-                );
-            });
+            this.selectsRegistry[uuid] = selectValue;
         }
     },
     mounted() {

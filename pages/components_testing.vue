@@ -1,5 +1,6 @@
 <template>
-    <multiselect :options="options" />
+    <multiselect label="title"
+                 trackBy="key" :options="options" v-model="value" />
     <!--    <CriterionSelect :options="options" />-->
 </template>
 
@@ -13,6 +14,7 @@ export default {
     // components: { CriterionSelect, RegisterForm, RegisterConfirmForm },
     data() {
         return {
+            value: null,
             todos: [
                 { text: "Заявление №1" },
                 { text: "Заявление №2" },
