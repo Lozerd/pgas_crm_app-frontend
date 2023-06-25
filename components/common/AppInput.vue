@@ -8,8 +8,15 @@
         :vid="name"
         v-slot="{ errors }"
     >
-        <ul class="error-list" v-if="errors && errors.length">
-            <li class="error-item" :key="error" v-for="error in errors">
+        <ul
+            class="error-list"
+            v-if="errors && errors.length"
+        >
+            <li
+                class="error-item"
+                :key="error"
+                v-for="error in errors"
+            >
                 {{ error }}
             </li>
         </ul>
@@ -25,17 +32,28 @@
             :accept="accept"
             v-model="inputValue"
             class="field__input"
+            @change="appInputFileHandler"
         />
         <span class="field__title">{{ title }}</span>
     </AppValidationProvider>
 </template>
 <script>
+
+import debounce from "@/utils/debounce";
+
 export default {
     name: "AppInput",
+    emits: ['appInputEmit', 'appInputFileEmit'],
     data() {
         return {
             inputValue: this.initial ?? ""
         };
+    },
+    watch: {
+        inputValue(...args) {
+            console.log("CHANGED")
+            this.debouncedAppInput(...args)
+        }
     },
     computed: {
         computedRules() {
@@ -51,7 +69,35 @@ export default {
             };
         }
     },
+    methods: {
+        appInputFileHandler(e) {
+            if (this.type !== "file" || e.target.files?.length === 0) {
+                return
+            }
+
+            let files = []
+            for (const file of e.target.files) {
+                files.push(file)
+            }
+
+            this.$nuxt.$emit("appInputFileEmit", [this.name, files])
+        }
+    },
+    created() {
+        this.debouncedAppInput = debounce((newVal, oldVal) => {
+            const vm = this
+            if (vm.type === "file") {
+                return
+            }
+            vm.$nuxt.$emit("appInputEmit", [this.uuid, this.name, newVal])
+        }, 2000)
+    },
     props: {
+        uuid: {
+            type: Number,
+            required: false,
+            default: Math.floor(Math.random() * 100)
+        },
         title: {
             type: [String, Number],
             required: true
@@ -104,10 +150,14 @@ export default {
         rules: {
             type: Object,
             required: false,
-            default: () => {}
+            default: () => {
+            }
         }
     }
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style
+    scoped
+    lang="scss"
+></style>

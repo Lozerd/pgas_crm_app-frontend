@@ -18,7 +18,6 @@ function parseDate(date, format) {
     if (typeof date !== "string") {
         return isValid(date) ? date : null;
     }
-    console.log(date, format);
 
     const parsed = parse(date, format, new Date());
 

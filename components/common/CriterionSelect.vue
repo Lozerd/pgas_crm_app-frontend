@@ -46,7 +46,7 @@ export default {
     name: "CriterionSelect",
     data() {
         return {
-            selectValue: null, // to display placeholder on non focused select.
+            selectValue: this.initial ?? null, // to display placeholder on non focused select.
             disabled: false
         };
     },
@@ -80,10 +80,13 @@ export default {
         this.disableListener();
     },
     props: {
+        initial: {
+
+        },
         uuid: {
-            type: String,
+            type: Number,
             required: false,
-            default: Math.floor(Math.random() * 100).toString()
+            default: Math.floor(Math.random() * 100)
         },
         options: {
             type: Array[Object],

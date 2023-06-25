@@ -11,6 +11,7 @@
                     method="post"
                     submitButtonText="Подать заявку"
                     ref="formValidatorRef"
+                    enctype="multipart/form-data"
                 >
                     <AppSelect
                         name="activity_id"
@@ -30,20 +31,23 @@
                         :required="true"
                         :multiple="true"
                     />
-                    <div v-for="(group, index) in groups">{{index}}|{{group}}|{{group.inputsVisible}}|{{ group.inputsVisible ?? false }}</div>
-
                     <div
                         ref="contentGroup"
                         v-if="criterionVisible"
                         class="profile-make-request__content__group"
                         :key="group.criterionUID"
-                        v-for="(group, index) in cmptGroups"
+                        v-for="(group, index) in groups"
                     >
-                        <CriterionSelect :uuid="index.toString()" :options="activityCriterion" />
+                        <CriterionSelect
+                            :uuid="index"
+                            :options="activityCriterion"
+                            :initial="selectsRegistry[group.criterionUID]"
+                        />
                         <AppInput
                             v-if="group.inputsVisible ?? false"
                             title="Дата получения документа"
                             name="document_date"
+                            :uuid="index"
                             :required="true"
                             :rules="{ date_format: 'dd.MM.yyyy' }"
                         />
@@ -51,14 +55,15 @@
                             v-if="group.inputsVisible ?? false"
                             title="Наименование документа"
                             name="document_title"
+                            :uuid="index"
                             :required="true"
                         />
-                        <br>
                         <AppInput
                             v-if="group.inputsVisible ?? false"
                             type="file"
                             title="Файл документа"
-                            name="document_file"
+                            name="achievements_images"
+                            :uuid="index"
                         />
                     </div>
                     <button
@@ -79,25 +84,23 @@ import AppForm from "@/components/common/AppForm.vue";
 import AppInput from "@/components/common/AppInput.vue";
 import AppSelect from "@/components/common/AppSelect.vue";
 import CriterionSelect from "@/components/common/CriterionSelect.vue";
-import Vue from "vue";
 
 export default {
     name: "make-request",
-    components: { AppSelect, CriterionSelect, AppInput, AppForm },
+    components: {AppSelect, CriterionSelect, AppInput, AppForm},
     layout: "profile",
     data() {
         return {
             errors: [],
             activity_id: null,
+            report_book_images: [],
+            achievements_images: [],
             criterionVisible: false,
             selectsRegistry: {},
             groups: [{}]
         };
     },
     computed: {
-        cmptGroups() {
-            return this.groups;
-        },
         activities() {
             return this.$store.getters["activity/getActivities"];
         },
@@ -109,13 +112,33 @@ export default {
         }
     },
     methods: {
-        onSubmit(formRef) {
+        async onSubmit(formRef) {
+            let data = new FormData(formRef);
+
+            data.delete("document_file")
+            data.delete("document_title")
+            data.delete("report_book_images")
+            data.delete("achievements_images")
+
+            const results = this.groups.map(group => group.data)
+
+            data.append("results", JSON.stringify(results))
+
+            for (let report_book_image of this.report_book_images) {
+                data.append("report_book_images", report_book_image)
+            }
+
+            for (let achievement_image of this.achievements_images) {
+                data.append("achievements_images", achievement_image)
+            }
+
+            await this.$store.dispatch("profile/postRequest", data)
         },
         async onActivityChange(event) {
             this.criterionVisible = true;
 
             if (this.groups.length > 0) {
-                this.groups = [{uuid: 0, inputsVisible: false}];
+                this.groups = [{data: {}, criterionUID: 0, inputsVisible: false}];
             } else {
                 this.groups.push({});
             }
@@ -128,29 +151,44 @@ export default {
             if (!("contentGroup" in this.$refs)) {
                 return;
             }
-            // e.preventDefault();
 
             this.validationObserver.validate().then((valid) => {
                 if (valid) {
-                    this.groups.push({});
+                    this.groups.push({data: {}, criterionUID: this.groups.length, inputsVisible: false});
                 }
             });
         },
-        onCriterionSelect({ uuid, selectValue }) {
-            if (!(uuid in this.selectsRegistry)) {
-                if (this.groups.length < 2) {
-                    // this.groups[0].inputsVisible = true
-                    // this.groups[0].criterionUID = uuid
-                } else {
-                    this.groups.push({ criterionUID: uuid, inputsVisible: true });
-                }
+        onCriterionSelect({uuid, selectValue}) {
+            if (uuid in this.groups && (this.groups[uuid].data.criteria_key === selectValue.key ?? true)) {
+                return
             }
 
-            this.selectsRegistry[uuid] = selectValue;
+            this.groups[uuid] = {
+                data: {criteria_key: selectValue.key},
+                criterionUID: uuid,
+                inputsVisible: true,
+            };
+            this.$forceUpdate()
+        },
+        onAppInputEmit([criterionUID, inputName, newVal]) {
+            if (["report_book_images", "achievements_images"].includes(inputName)) {
+                return
+            }
+
+            this.groups[criterionUID]["data"][inputName] = newVal
+        },
+        onAppInputFileEmit([inputName, files]) {
+            if (files?.length === 0) {
+                return
+            }
+
+            this[inputName].push(...files)
         }
     },
     mounted() {
         this.$nuxt.$on("criterion-select", this.onCriterionSelect);
+        this.$nuxt.$on("appInputEmit", this.onAppInputEmit)
+        this.$nuxt.$on("appInputFileEmit", this.onAppInputFileEmit)
     },
     async fetch() {
         await this.$store.dispatch("activity/getActivities");

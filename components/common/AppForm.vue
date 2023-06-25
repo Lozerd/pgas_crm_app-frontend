@@ -5,9 +5,10 @@
         slim
     >
         <form
-            @submit.prevent="handleSubmit(formOnSubmit)"
             ref="AppFormRef"
             :action="action"
+            :enctype="enctype"
+            @submit.prevent="handleSubmit(formOnSubmit)"
         >
             <slot></slot>
             <ul class="error-list" v-if="errors">
@@ -39,6 +40,11 @@ export default {
         this.modalOpenedListener();
     },
     props: {
+        enctype: {
+            type: String,
+            required: false,
+            default: "application/x-www-form-urlencoded"
+        },
         onSubmit: {
             type: Function,
             required: false
