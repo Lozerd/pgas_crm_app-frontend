@@ -140,7 +140,7 @@ export default {
             if (this.groups.length > 0) {
                 this.groups = [{data: {}, criterionUID: 0, inputsVisible: false}];
             } else {
-                this.groups.push({});
+                this.groups = [...this.groups, {}];
             }
 
             await this.$store.dispatch("activity/getActivityCriterion", [
@@ -154,7 +154,7 @@ export default {
 
             this.validationObserver.validate().then((valid) => {
                 if (valid) {
-                    this.groups.push({data: {}, criterionUID: this.groups.length, inputsVisible: false});
+                    this.groups = [...this.groups, {data: {}, criterionUID: this.groups.length, inputsVisible: false}];
                 }
             });
         },
@@ -163,32 +163,45 @@ export default {
                 return
             }
 
-            this.groups[uuid] = {
+            let groups = Array.from(this.groups)
+
+            groups[uuid] = {
                 data: {criteria_key: selectValue.key},
                 criterionUID: uuid,
                 inputsVisible: true,
             };
-            this.$forceUpdate()
+
+            this.groups = groups
         },
         onAppInputEmit([criterionUID, inputName, newVal]) {
             if (["report_book_images", "achievements_images"].includes(inputName)) {
                 return
             }
 
-            this.groups[criterionUID]["data"][inputName] = newVal
+            let groups = this.groups
+
+            groups[criterionUID]["data"][inputName] = newVal
+
+            this.groups = groups
         },
         onAppInputFileEmit([inputName, files]) {
+            console.log(inputName, files, )
             if (files?.length === 0) {
                 return
             }
 
-            this[inputName].push(...files)
+            this[inputName] = files
         }
     },
-    mounted() {
+    created() {
         this.$nuxt.$on("criterion-select", this.onCriterionSelect);
         this.$nuxt.$on("appInputEmit", this.onAppInputEmit)
         this.$nuxt.$on("appInputFileEmit", this.onAppInputFileEmit)
+    },
+    beforeDestroy() {
+        this.$nuxt.$off("criterion-select", this.onCriterionSelect);
+        this.$nuxt.$off("appInputEmit", this.onAppInputEmit)
+        this.$nuxt.$off("appInputFileEmit", this.onAppInputFileEmit)
     },
     async fetch() {
         await this.$store.dispatch("activity/getActivities");

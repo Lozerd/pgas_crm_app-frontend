@@ -71,6 +71,7 @@ export default {
     },
     methods: {
         appInputFileHandler(e) {
+            console.log(this.type, e.target.files)
             if (this.type !== "file" || e.target.files?.length === 0) {
                 return
             }
@@ -153,6 +154,8 @@ export default {
             default: () => {
             }
         }
+    },
+    mounted() {
     }
 };
 </script>
